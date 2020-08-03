@@ -18,7 +18,7 @@ export class UsersService {
     } else {
       this.getUsers().subscribe(users => {
         console.log("Users parsed", users);
-        this.users = localUsers;
+        this.users = users;
       });
     }
   }
