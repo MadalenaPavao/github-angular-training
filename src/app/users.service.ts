@@ -28,7 +28,7 @@ export class UsersService {
       map((userList: any[]) => userList.reduce(function(map, user) {
           map[user.email] = user;
           return map;
-      }, {}))
+      }, {}));
     );
   }
 
@@ -81,6 +81,8 @@ export class UsersService {
           command.ligneCommandeList.push(productItem);
         }
 
+        this.updatePriceTotal(command);
+
         this.user.next(updatedUser);
         observer.next(updatedUser);
         observer.complete();
@@ -130,6 +132,8 @@ export class UsersService {
           delete command.ligneCommandeList[id];
         }
 
+        this.updatePriceTotal(command);
+
 
         this.user.next(updatedUser);
         observer.next(updatedUser);
@@ -152,6 +156,29 @@ export class UsersService {
 
         updatedUser.commandeList = [];
 
+        this.user.next(updatedUser);
+        observer.next(updatedUser);
+        observer.complete();
+      }, error => {
+        observer.error("Cannot remove products");
+      });
+    });
+  }
+
+  updatePriceTotal(order: any) {
+     return new Observable(observer => { 
+      this.user.subscribe(user => {
+        const updatedUser = JSON.parse(JSON.stringify(user));
+        
+        if(!updatedUser.commandeList.length) {
+          observer.error("Cannot remove products. Order doesnt exists");
+          return
+        }
+
+        order.prix_total = order.ligneCommandeList.reduce(function(accumulator, currentItem) {
+          return accumulator + currentItem.prix_unitaire;
+        }, 0);
+        
         this.user.next(updatedUser);
         observer.next(updatedUser);
         observer.complete();
