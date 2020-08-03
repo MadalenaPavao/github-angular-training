@@ -1,1 +1,14 @@
-<p>food-catalogue works!</p>
+<p>Repas:</p>
+<ul *ngIf="getCategories() | async as categories">
+	<li *ngFor="let category of categories">{{ category.libelle }}</li>
+</ul>
+<p>Famille repas:</p>
+<ul>
+	<li>
+	</li>
+</ul>
+<p>Products:</p>
+<ul>
+	<li>
+	</li>
+</ul>
