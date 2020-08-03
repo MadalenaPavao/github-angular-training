@@ -38,6 +38,7 @@ export class CartService {
         this.updatePriceTotal(command);
 
         this.usersService.user.next(updatedUser);
+        this.usersService.persistUsers();
         observer.next(updatedUser);
         observer.complete();
       }, error => {
@@ -54,8 +55,11 @@ export class CartService {
     return new Observable(observer => {
       this.usersService.user.subscribe(user => {
         const updatedUser = JSON.parse(JSON.stringify(user));
+        
         updatedUser.commandeList.push(order);
+        
         this.usersService.user.next(updatedUser);
+        this.usersService.persistUsers();
         observer.next(updatedUser);
         observer.complete();
       }, error => {
@@ -88,8 +92,8 @@ export class CartService {
 
         this.updatePriceTotal(command);
 
-
         this.usersService.user.next(updatedUser);
+        this.usersService.persistUsers();
         observer.next(updatedUser);
         observer.complete();
       }, error => {
@@ -111,6 +115,7 @@ export class CartService {
         updatedUser.commandeList = [];
 
         this.usersService.user.next(updatedUser);
+        this.usersService.persistUsers();
         observer.next(updatedUser);
         observer.complete();
       }, error => {

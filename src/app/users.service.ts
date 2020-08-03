@@ -55,4 +55,8 @@ export class UsersService {
     localStorage.setItem("isConnected", "false");
   }
 
+  persistUsers() {
+    localStorage.setItem("users", JSON.stringify(Object["values"](this.users)));
+  }
+
 }
