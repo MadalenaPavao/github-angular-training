@@ -1,14 +1,28 @@
 <p>Repas:</p>
-<ul *ngIf="getCategories() | async as categories">
-	<li *ngFor="let category of categories">{{ category.libelle }}</li>
+<ul *ngIf="categories$ | async as categories; else loading">
+	<li *ngFor="let category of categories$ | async" (click)="getSubCategories(category.id)">{{ category.libelle }}</li>
 </ul>
 <p>Famille repas:</p>
-<ul>
-	<li>
-	</li>
+<ul *ngIf="subCategories$ | async as subCategories; else noCategory">
+	<li *ngFor="let subCategory of subCategories" (click)="getProducts(1, subCategory.id)">{{ subCategory.libelle }}</li>
 </ul>
 <p>Products:</p>
-<ul>
-	<li>
-	</li>
+<ul *ngIf="products$ | async as products; else noSubCategory">
+	<li *ngFor="let product of products.data">
+    <span>{{ product.libellecommercial }}</span>
+    <span (click)="addProduct(product, 1)">+</span>
+    <span (click)="removeProduct(product.id)">-</span>
+  </li>
 </ul>
+
+<ng-template #loading>
+  Please wait, loading...
+</ng-template>
+
+<ng-template #noCategory>
+  Choose a category
+</ng-template>
+
+<ng-template #noSubCategory>
+  Choose a sub category
+</ng-template>
