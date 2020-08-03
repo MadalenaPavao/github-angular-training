@@ -26,15 +26,15 @@ export class ProductService {
 
   getBestSellerProducts() {
     return this.getProducts().pipe(
-      map(products => products.data.map(prod => prod.sort(this.compareByRating).slice(0, 3)))
+      map(products => products.data.sort(this.compareByRating).slice(0, 3))
     );
   }
 
   compareByRating(a, b) {
-    if (a.note < b.note) {
+    if (a.note > b.note) {
       return -1;
     }
-    if (a.note > b.note) {
+    if (a.note < b.note) {
       return 1;
     }
     return 0;
