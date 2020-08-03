@@ -9,11 +9,21 @@ import { map, tap } from "rxjs/operators";
 export class ProductService {
   constructor(private httpClient: HttpClient) {}
 
-  getProducts(page = 1): Observable<any> {
+  getCategories() {
+    return this.httpClient.get<any>("../../assets/repas.json");
+  }
+
+  getSubCategories(categoryId: number) {
+    return this.httpClient.get<any>("../../assets/famille-repas.json").pipe(
+      map(products => products.filter(subCategory => subCategory.repas == categoryId))
+    );
+  }
+
+  getProducts(page = 1, subCategoryId = null): Observable<any> {
     return this.httpClient.get<any>("../../assets/products.json").pipe(
       map(response => ({
         count: response.count,
-        data: response.data.slice((page - 1) * 10, 10)
+        data: response.data.filter(p => subCategoryId ? p.familleId === subCategoryId : true).slice((page - 1) * 10, 10)
       }))
     );
   }

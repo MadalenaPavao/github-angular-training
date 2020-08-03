@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "libelle": "Petit déjeuner",
+        "heure_limite": "11:30:00",
+        "isenabled": true,
+        "imageURL": "https://cdn.pixabay.com/photo/2015/05/07/13/46/cappuccino-756490_960_720.jpg"
+    },
+    {
+        "id": 2,
+        "libelle": "Déjeuner",
+        "heure_limite": "15:00:00",
+        "isenabled": true,
+        "imageURL": "https://cdn.pixabay.com/photo/2017/12/09/08/18/pizza-3007395_960_720.jpg"
+    },
+    {
+        "id": 3,
+        "libelle": "Goûter",
+        "heure_limite": "18:00:00",
+        "isenabled": true,
+        "imageURL": "https://cdn.pixabay.com/photo/2014/08/26/12/49/the-cake-427920_960_720.jpg"
+    },
+    {
+        "id": 4,
+        "libelle": "Dîner",
+        "heure_limite": "00:00:00",
+        "isenabled": true,
+        "imageURL": "https://cdn.pixabay.com/photo/2018/04/13/17/14/vegetable-skewer-3317060_960_720.jpg"
+    }
+]

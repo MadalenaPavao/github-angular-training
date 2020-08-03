@@ -15,12 +15,18 @@ export class UsersService {
     if(localUsers && localUsers.length) {
       console.log("Users restored from local storage", localUsers);
       this.users = localUsers;
+      this.loadCurrentUser();
     } else {
       this.getUsers().subscribe(users => {
         console.log("Users parsed", users);
         this.users = users;
+        this.loadCurrentUser();
       });
     }
+  }
+
+  loadCurrentUser() {
+    this.user.next(this.users[localStorage.getItem("email")]);
   }
 
   getUsers() {
@@ -44,8 +50,9 @@ export class UsersService {
   login(email: string, password: string) {
     const userExists = this.checkUserExists(email, password);
     if(userExists) { 
-      this.user.next(userExists)
+      this.user.next(userExists);
       localStorage.setItem("isConnected", "true");
+      localStorage.setItem("email", email);
       return true;
     }
   }
@@ -53,6 +60,7 @@ export class UsersService {
   logout() {
     this.user.next(null);
     localStorage.setItem("isConnected", "false");
+    localStorage.removeItem("email");
   }
 
   persistUsers() {
