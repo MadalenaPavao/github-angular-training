@@ -28,7 +28,7 @@ export class UsersService {
       map((userList: any[]) => userList.reduce(function(map, user) {
           map[user.email] = user;
           return map;
-      }, {}));
+      }, {}))
     );
   }
 
