@@ -10,7 +10,7 @@ export class ProductService {
   constructor(private httpClient: HttpClient) {}
 
   getProducts(page = 1): Observable<any> {
-    return this.httpClient.get<any>( "../../assets/products.json").pipe(
+    return this.httpClient.get<any>("../../assets/products.json").pipe(
       map(response => ({
         count: response.count,
         data: response.data.slice((page - 1) * 10, 10)
@@ -26,7 +26,17 @@ export class ProductService {
 
   getBestSellerProducts() {
     return this.getProducts().pipe(
-
+      map(products => products.data.map(prod => prod.sort(this.compareByRating).slice(0, 3)))
     );
+  }
+
+  compareByRating(a, b) {
+    if (a.note < b.note) {
+      return -1;
+    }
+    if (a.note > b.note) {
+      return 1;
+    }
+    return 0;
   }
 }
