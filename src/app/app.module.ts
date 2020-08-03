@@ -9,6 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { FoodCatalogueComponent } from './food-catalogue/food-catalogue.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,9 @@ import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
