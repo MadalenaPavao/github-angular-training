@@ -39,29 +39,13 @@
   </div>
   <h1 style="text-align: center;">Nos meilleurs ventes</h1>
   <div style="display: flex; flex-direction: row;">
-    <div class="card" style="width: 18rem; flex: 1;">
-        <img src="..." class="card-img-top" alt="...">
+    <div class="card" style="width: 18rem; flex: 1;" *ngFor="let product of meilleursVentes">
+        <img src="{{product.image}}" class="card-img-top">
         <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
+          <h5 class="card-title"><a href="">{{product.libellecommercial}}</a></h5>
+            <p class="card-text">{{product.prix_unitaire | currency : 'EUR'}}</p>
+            <p class="card-text"><span *ngFor="let star of createProductRating(product.note)">★</span></p>
         </div>
-      </div>
-      <div class="card" style="width: 18rem; flex: 1;">
-        <img src="..." class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-      </div>
-      <div class="card" style="width: 18rem; flex: 1;">
-        <img src="..." class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-      </div>
     </div>
+  </div>
  
