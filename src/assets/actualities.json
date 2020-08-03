@@ -1,0 +1,29 @@
+[
+    {
+        "description": "Il va falloir faire très attention au données échangées",
+        "id": 1,
+        "imageURL": "https://picsum.photos/id/123/200/300",
+        "date_de_creation": "2020-07-23T21:31:37.000+0000",
+        "date_de_validite": "2020-07-23T21:31:37.000+0000",
+        "utilisateur_creation": 1,
+        "title": "Love PIZZA"
+    },
+    {
+        "description": "Il va falloir faire très attention au données échangées",
+        "id": 2,
+        "imageURL": "https://picsum.photos/id/123/200/300",
+        "date_de_creation": "2020-07-23T21:31:37.000+0000",
+        "date_de_validite": "2020-07-23T21:31:37.000+0000",
+        "utilisateur_creation": 1,
+        "title": "Love PIZZA 2"
+    },
+    {
+        "description": "Ratatouille maison ",
+        "id": 3,
+        "imageURL": "https://cdn.pixabay.com/photo/2018/09/01/11/28/ratatouille-3646586_1280.jpg",
+        "date_de_creation": "2020-07-23T21:31:37.000+0000",
+        "date_de_validite": "2020-07-23T21:31:37.000+0000",
+        "utilisateur_creation": 1,
+        "title": "Ratatouille"
+    }
+]
