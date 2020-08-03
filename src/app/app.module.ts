@@ -7,6 +7,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { LoginComponent } from './login/login.component';
 import { FoodCatalogueComponent } from './food-catalogue/food-catalogue.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { FoodCatalogueComponent } from './food-catalogue/food-catalogue.componen
     NavbarComponent,
     HomePageComponent,
     LoginComponent,
-    FoodCatalogueComponent
+    FoodCatalogueComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
