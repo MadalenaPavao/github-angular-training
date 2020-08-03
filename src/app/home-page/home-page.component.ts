@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../products.service';
+import { AcceuilService } from '../acceuil.service';
 
 @Component({
   selector: 'app-home-page',
@@ -9,16 +10,19 @@ import { ProductService } from '../products.service';
 export class HomePageComponent implements OnInit {
 
   meilleursVentes: Array<any> = [];
+  actualites: Array<any> = [];
 
-  constructor(private _productService : ProductService) { }
+  constructor(private _productService : ProductService, private _carrousselService: AcceuilService) { }
 
   ngOnInit(): void {
     this._productService.getBestSellerProducts().subscribe(products => {
       this.meilleursVentes = products;
-      console.log(this.meilleursVentes);
+    })
+    this._carrousselService.getAcceuils().subscribe(results => {
+      this.actualites = results;
     })
   }
-  
+
   createProductRating(n : number) {
     return new Array(n);
   }

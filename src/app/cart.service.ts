@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UsersService } from './users.service';
+import { map } from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -147,4 +148,9 @@ export class CartService {
     });
   }
 
+  getAllProducts() {
+    return this.usersService.user.pipe(
+      map(user => user.commandeList.map(commandList => commandList.ligneCommandeList))
+    );
+  }
 }
