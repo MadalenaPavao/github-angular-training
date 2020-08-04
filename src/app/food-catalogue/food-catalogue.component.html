@@ -14,8 +14,11 @@
 <ul *ngIf="products$ | async as products; else noSubCategory">
 	<li *ngFor="let product of products.data">
     <a href="javascript:">{{ product.libellecommercial }}</a>
-    <span class="cart button" (click)="addProduct(product, 1)">+</span>
-    <span class="cart button" (click)="removeProduct(product.id)">-</span>
+    <div *ngIf="isAuthenticated$ | async" class="cart buttons">
+      <span class="cart button" (click)="addProduct(product, 1)">+</span>
+      <span class="cart button" (click)="removeProduct(product.id)">-</span>
+      <span>{{ (getProductQuantities(product.id) | async)?.quantite }}</span>
+    </div>
   </li>
 </ul>
 

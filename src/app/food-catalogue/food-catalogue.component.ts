@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../products.service';
 import { Observable } from 'rxjs';
 import { CartService } from '../cart.service';
+import { UsersService } from '../users.service';
 
 @Component({
   selector: 'app-food-catalogue',
@@ -12,11 +13,15 @@ export class FoodCatalogueComponent implements OnInit {
   categories$: Observable<any>;
   subCategories$: Observable<any>;
   products$: Observable<any>;
+  isAuthenticated$: Observable<boolean>;
 
-  constructor(private productService: ProductService, private cartService: CartService) { }
+  constructor(private productService: ProductService, private cartService: CartService, private usersService: UsersService) {
+    this.isAuthenticated$ = usersService.isAuthenticated();
+  }
 
   ngOnInit(): void {
     this.categories$ = this.productService.getCategories();
+    this.cartService.getProduct(1).subscribe(p => console.log("p", p));
   }
 
   getSubCategories(categoryId: number) {
@@ -36,6 +41,10 @@ export class FoodCatalogueComponent implements OnInit {
 
   removeProduct(id: number) {
     this.cartService.removeProduct(id).subscribe(user => console.log("success"), error => console.error("error"));
+  }
+
+  getProductQuantities(id: number) {
+    return this.cartService.getProduct(id);
   }
 
 }
