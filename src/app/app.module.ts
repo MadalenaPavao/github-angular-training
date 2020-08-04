@@ -12,6 +12,7 @@ import { FoodCatalogueComponent } from './food-catalogue/food-catalogue.componen
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DpDatePickerModule } from 'ng2-date-picker';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DpDatePickerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

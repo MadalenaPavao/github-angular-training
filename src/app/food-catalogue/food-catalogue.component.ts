@@ -21,7 +21,10 @@ export class FoodCatalogueComponent implements OnInit {
 
   ngOnInit(): void {
     this.categories$ = this.productService.getCategories();
-    this.cartService.getProduct(1).subscribe(p => console.log("p", p));
+    this.cartService.orderWeekday.subscribe(p => {
+      if(this.products$)
+        this.products$ = null;
+    });
   }
 
   getSubCategories(categoryId: number) {
@@ -32,7 +35,7 @@ export class FoodCatalogueComponent implements OnInit {
 
   getProducts(page, subCategoryId = null) {
     this.products$ = null;
-    this.products$ = this.productService.getProducts(page, subCategoryId);
+    this.products$ = this.productService.getProductsByDate(page, subCategoryId, this.cartService.orderWeekday.value);
   }
 
   addProduct(product: any, quantite: number) {

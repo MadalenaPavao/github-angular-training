@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { UsersService } from './users.service';
 import { map, first } from "rxjs/operators";
 
@@ -7,6 +7,8 @@ import { map, first } from "rxjs/operators";
   providedIn: 'root'
 })
 export class CartService {
+
+  orderWeekday: BehaviorSubject<number> = new BehaviorSubject(null);
 
   constructor(private usersService : UsersService) {}
 
@@ -16,7 +18,7 @@ export class CartService {
         const updatedUser = JSON.parse(JSON.stringify(user));
         
         if(!updatedUser.commandeList.length) {
-          observer.error("Cannot add product. Order doesnt exists");
+          observer.error("Cannot add product. Order doesnt exists. Please choose delivery date using the calendar icon located in the topbar");
           return
         }
 
@@ -54,12 +56,16 @@ export class CartService {
     return (new Date()).getTime();
   }
 
-  createOrder(order: {date: Date, addressShiping?: string, addressInvoice: string}) {
+  createOrder(order: {date: string, addressShiping?: string, addressInvoice?: string}) {
     return new Observable(observer => {
       this.getUser().subscribe(user => {
         const updatedUser = JSON.parse(JSON.stringify(user));
         
-        updatedUser.commandeList.push(order);
+        updatedUser.commandeList.push({
+          ...order,
+          id: this.generateId(),
+          ligneCommandeList: []
+        });
         
         this.usersService.user.next(updatedUser);
         this.usersService.persistUsers();

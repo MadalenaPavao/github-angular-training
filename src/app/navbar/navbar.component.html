@@ -16,6 +16,10 @@
 		<div class="menu item" [routerLink]="['/login']" *ngIf="!(isAuthenticated$ | async)">
 			<i class="fas fa-user"></i>
 		</div>
+		<div class="menu item" *ngIf="isAuthenticated$ | async">
+			<i class="far fa-calendar-alt"></i>
+			<dp-date-picker [(ngModel)]="selectedDate" [config]="datePickerConfig" mode="day" (onSelect)="dateChange()"></dp-date-picker>
+		</div>
 		<div class="menu item" [routerLink]="['/cart']">
 			<i class="fas fa-shopping-cart"></i>
 		</div>

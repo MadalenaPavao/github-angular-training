@@ -28,6 +28,15 @@ export class ProductService {
     );
   }
 
+  getProductsByDate(page = 1, subCategoryId = null, day: number  = null): Observable<any> {
+    return this.httpClient.get<any>("../../assets/products.json").pipe(
+      map(response => ({
+        count: response.count,
+        data: response.data.filter(p => subCategoryId ? p.familleId === subCategoryId : true).filter(p => day ? p.disponibilite.split(",").indexOf(day + "") > -1 : true).slice((page - 1) * 10, 10)
+      }))
+    );
+  }
+
   getProductById(id: number) {
     return this.getProducts().pipe(
       map(products => products.data.find(prod => prod.productId == id))
