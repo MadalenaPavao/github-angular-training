@@ -1,22 +1,26 @@
-.cart.button {
-    width: 1.5rem;
-    height: 1.5rem;
-    background: #e8e8e8;
-    margin-left: 0.7rem;
-    padding: 0.1rem;
-    box-sizing: content-box;
-    cursor: pointer;
-    display: inline-flex;
-    line-height: 1.5rem;
-    justify-content: center;
-    align-items: center;
-    border-radius: 4px;
+.cart.buttons {
+  display: inline-block;
 
-    & + .cart.button {
-      margin-left: 2px;
-    }
+  .cart.button {
+      width: 1.5rem;
+      height: 1.5rem;
+      background: #e8e8e8;
+      margin-left: 0.7rem;
+      padding: 0.1rem;
+      box-sizing: content-box;
+      cursor: pointer;
+      display: inline-flex;
+      line-height: 1.5rem;
+      justify-content: center;
+      align-items: center;
+      border-radius: 4px;
 
-    &:hover {
-      background: grey;
-    }
+      & + .cart.button {
+        margin-left: 2px;
+      }
+
+      &:hover {
+        background: grey;
+      }
+  }
 }
