@@ -72,4 +72,10 @@ export class UsersService {
   persistUsers() {
     localStorage.setItem("users", JSON.stringify(Object["values"](this.users)));
   }
+
+  isAuthenticated() {
+    return this.user.pipe(
+      map(user => !!user)
+    )
+  }
 }
