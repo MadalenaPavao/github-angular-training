@@ -154,7 +154,13 @@ export class CartService {
 
   getAllProducts() {
     return this.getUser().pipe(
-      map(user => user.commandeList.map(commandList => commandList.ligneCommandeList))
+      map(user => user.commandeList.flatMap(commandList => commandList.ligneCommandeList))
+    );
+  }
+
+  getProduct(id: number) {
+    return this.getAllProducts().pipe(
+      map(products => products.find(p => p.produit.id === id))
     );
   }
 }
