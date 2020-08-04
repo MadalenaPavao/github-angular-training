@@ -16,7 +16,7 @@ export class CartService {
         const updatedUser = JSON.parse(JSON.stringify(user));
         
         if(!updatedUser.commandeList.length) {
-          observer.error("Cannot add product. Order doesnt exists. Please choose delivery date using the calendar icon located in the topbar");
+          observer.error("Cannot add product. Order doesnt exists");
           return
         }
 
@@ -35,8 +35,6 @@ export class CartService {
         } else {
           command.ligneCommandeList.push(productItem);
         }
-
-        this.updatePriceTotal(command);
 
         this.usersService.user.next(updatedUser);
         this.usersService.persistUsers();
@@ -79,7 +77,7 @@ export class CartService {
         const updatedUser = JSON.parse(JSON.stringify(user));
         
         if(!updatedUser.commandeList.length) {
-          observer.error("Cannot remove product. Order doesnt exists. Please choose delivery date using the calendar icon located in the topbar");
+          observer.error("Cannot remove product. Order doesnt exists");
           return
         }
 
@@ -94,8 +92,6 @@ export class CartService {
         } else {
           delete command.ligneCommandeList[id];
         }
-
-        this.updatePriceTotal(command);
 
         this.usersService.user.next(updatedUser);
         this.usersService.persistUsers();
@@ -129,32 +125,15 @@ export class CartService {
     });
   }
 
-  updatePriceTotal(order: any) {
-     return new Observable(observer => { 
-      this.getUser().subscribe(user => {
-        const updatedUser = JSON.parse(JSON.stringify(user));
-        
-        if(!updatedUser.commandeList.length) {
-          observer.error("Cannot remove products. Order doesnt exists");
-          return
-        }
-
-        order.prix_total = order.ligneCommandeList.reduce(function(accumulator, currentItem) {
-          return accumulator + currentItem.prix_unitaire;
-        }, 0);
-        
-        this.usersService.user.next(updatedUser);
-        observer.next(updatedUser);
-        observer.complete();
-      }, error => {
-        observer.error("Cannot remove products");
-      });
-    });
-  }
-
   getAllProducts() {
     return this.getUser().pipe(
       map(user => user.commandeList.flatMap(commandList => commandList.ligneCommandeList))
+    );
+  }
+
+  getProduct(id: number) {
+    return this.getAllProducts().pipe(
+      map(products => products.find(p => p.produit.id === id))
     );
   }
 
