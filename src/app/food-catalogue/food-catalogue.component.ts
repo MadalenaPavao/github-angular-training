@@ -17,6 +17,7 @@ export class FoodCatalogueComponent implements OnInit {
 
   ngOnInit(): void {
     this.categories$ = this.productService.getCategories();
+    this.cartService.getProduct(1).subscribe(p => console.log("p", p));
   }
 
   getSubCategories(categoryId: number) {
@@ -36,6 +37,10 @@ export class FoodCatalogueComponent implements OnInit {
 
   removeProduct(id: number) {
     this.cartService.removeProduct(id).subscribe(user => console.log("success"), error => console.error("error"));
+  }
+
+  getProductQuantities(id: number) {
+    return this.cartService.getProduct(id);
   }
 
 }

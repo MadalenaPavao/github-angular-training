@@ -16,6 +16,7 @@
     <a href="javascript:">{{ product.libellecommercial }}</a>
     <span class="cart button" (click)="addProduct(product, 1)">+</span>
     <span class="cart button" (click)="removeProduct(product.id)">-</span>
+    <span>{{ (getProductQuantities(product.id) | async)?.quantite }}</span>
   </li>
 </ul>
 
