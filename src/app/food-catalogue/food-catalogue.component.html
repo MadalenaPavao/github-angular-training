@@ -1,17 +1,21 @@
 <p>Repas:</p>
 <ul *ngIf="categories$ | async as categories; else loading">
-	<li *ngFor="let category of categories$ | async" (click)="getSubCategories(category.id)">{{ category.libelle }}</li>
+	<li *ngFor="let category of categories$ | async" (click)="getSubCategories(category.id)">
+    <a href="javascript:">{{ category.libelle }}</a>
+  </li>
 </ul>
 <p>Famille repas:</p>
 <ul *ngIf="subCategories$ | async as subCategories; else noCategory">
-	<li *ngFor="let subCategory of subCategories" (click)="getProducts(1, subCategory.id)">{{ subCategory.libelle }}</li>
+	<li *ngFor="let subCategory of subCategories" (click)="getProducts(1, subCategory.id)">
+    <a href="javascript:">{{ subCategory.libelle }}</a>
+  </li>
 </ul>
 <p>Products:</p>
 <ul *ngIf="products$ | async as products; else noSubCategory">
 	<li *ngFor="let product of products.data">
-    <span>{{ product.libellecommercial }}</span>
-    <span (click)="addProduct(product, 1)">+</span>
-    <span (click)="removeProduct(product.id)">-</span>
+    <a href="javascript:">{{ product.libellecommercial }}</a>
+    <span class="cart button" (click)="addProduct(product, 1)">+</span>
+    <span class="cart button" (click)="removeProduct(product.id)">-</span>
   </li>
 </ul>
 

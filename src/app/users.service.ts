@@ -1,20 +1,20 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { map } from "rxjs/operators"
-import { Subject } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { map } from "rxjs/operators";
+import { Subject, ReplaySubject } from "rxjs";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class UsersService {
   users: any;
-  public user: Subject<any> = new Subject();
+  public user: Subject<any> = new ReplaySubject(1);
 
-  constructor(private _httpClient : HttpClient) {
+  constructor(private _httpClient: HttpClient) {
     const localUsers = JSON.parse(localStorage.getItem("users"));
-    if(localUsers && localUsers.length) {
+    if (localUsers && localUsers.length) {
       console.log("Users restored from local storage", localUsers);
-      this.users = localUsers;
+      this.users = this.mapArrayToObject(localUsers);
       this.loadCurrentUser();
     } else {
       this.getUsers().subscribe(users => {
@@ -27,29 +27,35 @@ export class UsersService {
 
   loadCurrentUser() {
     this.user.next(this.users[localStorage.getItem("email")]);
+    this.user.subscribe(u => {
+      this.users[u.email] = {...u};
+      console.log("Current user saved", u);
+    });
   }
 
   getUsers() {
-    return this._httpClient.get("../../assets/users.json").pipe(
-      map((userList: any[]) => userList.reduce(function(map, user) {
-          map[user.email] = user;
-          return map;
-      }, {}))
-    );
+    return this._httpClient
+      .get("../../assets/users.json")
+      .pipe(map(this.mapArrayToObject));
+  }
+
+  mapArrayToObject(userList: any[]) {
+    return userList.reduce(function(map, user) {
+      map[user.email] = user;
+      return map;
+    }, {});
   }
 
   checkUserExists(email: string, password: string) {
     let userToMatch = this.users[email];
-    if(userToMatch) {
+    if (userToMatch) {
       return userToMatch; //userToMatch.password == password ? userToMatch : false;
-    }
-    else
-      return false;
+    } else return false;
   }
 
   login(email: string, password: string) {
     const userExists = this.checkUserExists(email, password);
-    if(userExists) { 
+    if (userExists) {
       this.user.next(userExists);
       localStorage.setItem("isConnected", "true");
       localStorage.setItem("email", email);
@@ -66,5 +72,4 @@ export class UsersService {
   persistUsers() {
     localStorage.setItem("users", JSON.stringify(Object["values"](this.users)));
   }
-
 }

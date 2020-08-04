@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UsersService } from './users.service';
-import { map } from "rxjs/operators";
+import { map, first } from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class CartService {
 
   addProduct(product: any, quantite: number, repasLibelle?: number) {
      return new Observable(observer => {
-      this.usersService.user.subscribe(user => {
+      this.getUser().subscribe(user => {
         const updatedUser = JSON.parse(JSON.stringify(user));
         
         if(!updatedUser.commandeList.length) {
@@ -29,7 +29,7 @@ export class CartService {
             produit: product
         };
 
-        const productFound = command.ligneCommandeList.find(p => p.id === product.id);
+        const productFound = command.ligneCommandeList.find(item => item.produit.id === product.id);
         if (productFound) {
           productFound.quantite++;
         } else {
@@ -48,13 +48,17 @@ export class CartService {
     });
   }
 
+  getUser() {
+    return this.usersService.user.pipe(first());
+  }
+
   generateId() {
     return (new Date()).getTime();
   }
 
   createOrder(order: {date: Date, addressShiping?: string, addressInvoice: string}) {
     return new Observable(observer => {
-      this.usersService.user.subscribe(user => {
+      this.getUser().subscribe(user => {
         const updatedUser = JSON.parse(JSON.stringify(user));
         
         updatedUser.commandeList.push(order);
@@ -71,7 +75,7 @@ export class CartService {
 
   removeProduct(id: number) {
     return new Observable(observer => {
-      this.usersService.user.subscribe(user => {
+      this.getUser().subscribe(user => {
         const updatedUser = JSON.parse(JSON.stringify(user));
         
         if(!updatedUser.commandeList.length) {
@@ -105,7 +109,7 @@ export class CartService {
 
   removeAllProduct() {
     return new Observable(observer => { 
-      this.usersService.user.subscribe(user => {
+      this.getUser().subscribe(user => {
         const updatedUser = JSON.parse(JSON.stringify(user));
         
         if(!updatedUser.commandeList.length) {
@@ -127,7 +131,7 @@ export class CartService {
 
   updatePriceTotal(order: any) {
      return new Observable(observer => { 
-      this.usersService.user.subscribe(user => {
+      this.getUser().subscribe(user => {
         const updatedUser = JSON.parse(JSON.stringify(user));
         
         if(!updatedUser.commandeList.length) {
@@ -149,7 +153,7 @@ export class CartService {
   }
 
   getAllProducts() {
-    return this.usersService.user.pipe(
+    return this.getUser().pipe(
       map(user => user.commandeList.map(commandList => commandList.ligneCommandeList))
     );
   }
