@@ -83,7 +83,7 @@ export class CartService {
 
         const command = updatedUser.commandeList[0];
 
-        const productFound = command.ligneCommandeList.find(p => p.id === id);
+        const productFound = command.ligneCommandeList.find(p => p.produit.id === id);
         if (productFound) {
           productFound.quantite--;
           if (productFound.quantite === 0) {
