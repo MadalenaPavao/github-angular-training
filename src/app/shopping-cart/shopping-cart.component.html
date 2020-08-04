@@ -9,7 +9,7 @@
           <tr *ngFor="let item of userCart">
             <td>{{item.produit.libellecommercial}}</td>
             <td>{{item.quantite}}</td>
-            <td>{{item.prix_unitaire * item.quantite + ' €'}}</td>
+            <td>{{item.produit.prix_unitaire * item.quantite + ' €'}}</td>
           </tr>
         </tbody>
         <tfoot>

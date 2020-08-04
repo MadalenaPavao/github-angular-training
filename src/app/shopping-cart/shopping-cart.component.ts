@@ -20,7 +20,7 @@ export class ShoppingCartComponent implements OnInit {
       console.log('USER CART', this.userCart);
     });
     this.totalPrice = this.userCart.reduce(function(accumulator, currentItem) {
-      return accumulator + (currentItem.prix_unitaire * currentItem.quantite);
+      return accumulator + (currentItem.produit.prix_unitaire * currentItem.quantite);
     }, 0);
   }
 
