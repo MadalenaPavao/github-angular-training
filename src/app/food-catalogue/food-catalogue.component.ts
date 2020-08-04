@@ -31,11 +31,21 @@ export class FoodCatalogueComponent implements OnInit {
   }
 
   addProduct(product: any, quantite: number) {
-    this.cartService.addProduct(product, quantite).subscribe(user => console.log("success"), error => console.error("error"));
+    this.cartService.addProduct(product, quantite).subscribe(user => {
+      console.log("Product successfully added");
+    }, error => {
+      alert(error);
+      console.error("error", error);
+    });
   }
 
   removeProduct(id: number) {
-    this.cartService.removeProduct(id).subscribe(user => console.log("success"), error => console.error("error"));
+    this.cartService.removeProduct(id).subscribe(user => {
+      console.log("Product successfully removed");
+    }, error => {
+      alert(error);
+      console.error("error", error);
+    });
   }
 
 }

@@ -16,7 +16,7 @@ export class CartService {
         const updatedUser = JSON.parse(JSON.stringify(user));
         
         if(!updatedUser.commandeList.length) {
-          observer.error("Cannot add product. Order doesnt exists");
+          observer.error("Cannot add product. Order doesnt exists. Please choose delivery date using the calendar icon located in the topbar");
           return
         }
 
@@ -79,7 +79,7 @@ export class CartService {
         const updatedUser = JSON.parse(JSON.stringify(user));
         
         if(!updatedUser.commandeList.length) {
-          observer.error("Cannot remove product. Order doesnt exists");
+          observer.error("Cannot remove product. Order doesnt exists. Please choose delivery date using the calendar icon located in the topbar");
           return
         }
 
