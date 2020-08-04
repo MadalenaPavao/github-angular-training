@@ -136,4 +136,10 @@ export class CartService {
       map(products => products.find(p => p.produit.id === id))
     );
   }
+
+  getProduct(id: number) {
+    return this.getAllProducts().pipe(
+      map(products => products.find(p => p.produit.id === id))
+    );
+  }
 }
