@@ -36,8 +36,6 @@ export class CartService {
           command.ligneCommandeList.push(productItem);
         }
 
-        this.updatePriceTotal(command);
-
         this.usersService.user.next(updatedUser);
         this.usersService.persistUsers();
         observer.next(updatedUser);
@@ -95,8 +93,6 @@ export class CartService {
           delete command.ligneCommandeList[id];
         }
 
-        this.updatePriceTotal(command);
-
         this.usersService.user.next(updatedUser);
         this.usersService.persistUsers();
         observer.next(updatedUser);
@@ -129,32 +125,9 @@ export class CartService {
     });
   }
 
-  updatePriceTotal(order: any) {
-     return new Observable(observer => { 
-      this.getUser().subscribe(user => {
-        const updatedUser = JSON.parse(JSON.stringify(user));
-        
-        if(!updatedUser.commandeList.length) {
-          observer.error("Cannot remove products. Order doesnt exists");
-          return
-        }
-
-        order.prix_total = order.ligneCommandeList.reduce(function(accumulator, currentItem) {
-          return accumulator + currentItem.prix_unitaire;
-        }, 0);
-        
-        this.usersService.user.next(updatedUser);
-        observer.next(updatedUser);
-        observer.complete();
-      }, error => {
-        observer.error("Cannot remove products");
-      });
-    });
-  }
-
   getAllProducts() {
     return this.getUser().pipe(
-      map(user => user.commandeList.map(commandList => commandList.ligneCommandeList))
+      map(user => user.commandeList.flatMap(commandList => commandList.ligneCommandeList))
     );
   }
 }

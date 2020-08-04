@@ -9,6 +9,8 @@ import { CartService } from '../cart.service';
 export class ShoppingCartComponent implements OnInit {
 
   userCart : any;
+  userCartColumns = ['Produit', 'Quantité', 'Prix'];
+  totalPrice: number = null;
 
   constructor(private _cartService : CartService) { }
 
@@ -17,6 +19,15 @@ export class ShoppingCartComponent implements OnInit {
       this.userCart = result;
       console.log('USER CART', this.userCart);
     });
+    this.totalPrice = this.userCart.reduce(function(accumulator, currentItem) {
+      return accumulator + (currentItem.prix_unitaire * currentItem.quantite);
+    }, 0);
   }
 
+  clearCart() {
+    this._cartService.removeAllProduct().subscribe(result => {
+      this.userCart = [];
+      this.totalPrice = 0;
+    });
+  }
 }

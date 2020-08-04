@@ -1,1 +1,33 @@
-<p>shopping-cart works!</p>
+<div class="container" style="margin-top: 100px;">
+    <table class="table table-bordered table-striped">
+        <thead  class="thead-dark">
+          <tr> 
+            <th scope="col" *ngFor="let column of userCartColumns">{{column}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of userCart">
+            <td>{{item.produit.libellecommercial}}</td>
+            <td>{{item.quantite}}</td>
+            <td>{{item.prix_unitaire * item.quantite + ' €'}}</td>
+          </tr>
+        </tbody>
+        <tfoot>
+            <tr class="table-secondary">
+                <th colspan="2" style="text-align: right"> Prix total</th>
+                <td>
+                    {{totalPrice + '€'}}
+                </td>
+            </tr> 
+        </tfoot>
+    </table>
+    <div style="display:flex">
+        <div>
+            <button type="button" class="btn btn-danger" (click)="clearCart()">Vider panier</button>
+        </div>
+        <div style="text-align: right">
+            <button type="button" class="btn btn-success">Finir la commande</button>
+        </div>
+    </div>
+    
+</div>
